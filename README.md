@@ -13,6 +13,12 @@ $ npm install --save-dev typescript tslint mocha power-assert espower-typescript
 ...
 ```
 
+## Test
+
+```
+$ npm run test
+```
+
 ## Directory Structure
 
 ```
