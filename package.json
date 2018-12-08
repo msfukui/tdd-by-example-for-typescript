@@ -1,0 +1,32 @@
+{
+  "name": "tdd-by-example-for-typescript",
+  "version": "0.0.1",
+  "description": "This is a repository of trying to read the book \"Test Driven Development\" with TypeScript.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.12",
+    "espower-typescript": "^9.0.1",
+    "mocha": "^5.2.0",
+    "power-assert": "^1.6.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msfukui/tdd-by-example-for-typescript.git"
+  },
+  "keywords": [
+    "tdd"
+  ],
+  "author": "msfukui",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/msfukui/tdd-by-example-for-typescript/issues"
+  },
+  "homepage": "https://github.com/msfukui/tdd-by-example-for-typescript#readme"
+}
