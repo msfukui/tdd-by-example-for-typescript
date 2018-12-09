@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/msfukui/tdd-by-example-for-typescript.svg?branch=master)](https://travis-ci.org/msfukui/tdd-by-example-for-typescript)
+
 # TDD by Example for TypeScript
 
 書籍「テスト駆動開発」を TypeScript で読み進めてみるレポジトリです。
@@ -100,3 +102,5 @@ $
 * [TypeScriptのユニットテストをmocha + power-assert で書く - こまどブログ](https://ky-yk-d.hatenablog.com/entry/2018/11/04/091055)
 
 * [コンパイル結果で考えるTypeScriptのimport / export / namespace - stone's throw](http://osamtimizer.hatenablog.com/entry/2018/06/27/222155)
+
+* [TypeScript の型入門 - Qiita](https://qiita.com/uhyo/items/e2fdef2d3236b9bfe74a)
