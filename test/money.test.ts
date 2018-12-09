@@ -12,4 +12,10 @@ describe("Money module", () => {
     assert(new Money.Dollar(5).equals(new Money.Dollar(5)));
     assert(! new Money.Dollar(5).equals(new Money.Dollar(6)));
   });
+
+  it("Franc Multiplication Test", () => {
+    let five: Money.Franc = new Money.Franc(5);
+    assert(five.times(2).equals(new Money.Franc(10)));
+    assert(five.times(3).equals(new Money.Franc(15)));
+  });
 });
