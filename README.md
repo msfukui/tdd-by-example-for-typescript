@@ -104,3 +104,5 @@ $
 * [コンパイル結果で考えるTypeScriptのimport / export / namespace - stone's throw](http://osamtimizer.hatenablog.com/entry/2018/06/27/222155)
 
 * [TypeScript の型入門 - Qiita](https://qiita.com/uhyo/items/e2fdef2d3236b9bfe74a)
+
+* [GithubとTravisCIで継続的インテグレーションする方法を解説します。](https://photo-tea.com/p/17/javascript-test-how-to-5/)
