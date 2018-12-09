@@ -14,7 +14,8 @@
     "typescript": "^3.2.2"
   },
   "scripts": {
-    "test": "mocha --watch-extensions ts -w --require espower-typescript/guess test/**/*.ts"
+    "test": "mocha --require espower-typescript/guess test/**/*.ts",
+    "test:watch": "mocha --watch-extensions ts -w --require espower-typescript/guess test/**/*.ts"
   },
   "repository": {
     "type": "git",
