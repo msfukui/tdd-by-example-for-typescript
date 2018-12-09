@@ -14,8 +14,10 @@
     "typescript": "^3.2.2"
   },
   "scripts": {
-    "test": "mocha --require espower-typescript/guess test/**/*.ts",
-    "test:watch": "mocha --watch-extensions ts -w --require espower-typescript/guess test/**/*.ts"
+    "lint": "tslint 'src/**/*.ts' 'test/**/*.ts'",
+    "test:mocha": "mocha --require espower-typescript/guess test/**/*.ts",
+    "test:watch": "mocha --watch-extensions ts -w --require espower-typescript/guess test/**/*.ts",
+    "test": "npm run lint && npm run test:mocha"
   },
   "repository": {
     "type": "git",
