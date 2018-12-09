@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/msfukui/tdd-by-example-for-typescript.svg?branch=master)](https://travis-ci.org/msfukui/tdd-by-example-for-typescript)
+
 # TDD by Example for TypeScript
 
 書籍「テスト駆動開発」を TypeScript で読み進めてみるレポジトリです。
