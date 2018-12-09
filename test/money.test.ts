@@ -13,6 +13,7 @@ describe("Money module", () => {
     assert(! new Money.Dollar(5).equals(new Money.Dollar(6)));
     assert(new Money.Franc(5).equals(new Money.Franc(5)));
     assert(! new Money.Franc(5).equals(new Money.Franc(6)));
+    assert(! new Money.Franc(5).equals(new Money.Dollar(5)));
   });
 
   it("Franc Multiplication Test", () => {
