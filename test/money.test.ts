@@ -9,4 +9,9 @@ describe("Money", () => {
     product = five.times(3);
     assert(15 === product.amount);
   });
+
+  it("Equality Test", () => {
+    assert(new Money.Dollar(5).equals(new Money.Dollar(5)));
+    assert(! new Money.Dollar(5).equals(new Money.Dollar(6)));
+  });
 });
