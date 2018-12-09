@@ -15,6 +15,23 @@ namespace Money {
       return this.amount === dollar.amount;
     }
   }
+
+  export class Franc {
+    private amount: number = 0;
+
+    constructor(amount: number) {
+      this.amount = amount;
+    }
+
+    public times(multiplier: number): Franc {
+      return new Franc(this.amount * multiplier);
+    }
+
+    public equals(object: any): boolean {
+      const dollar = object as Franc;
+      return this.amount === dollar.amount;
+    }
+  }
 }
 
 export default Money;
