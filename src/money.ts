@@ -1,6 +1,7 @@
 namespace Money {
-  export class Money {
+  export abstract class Money {
     protected amount: number = 0;
+    abstract times(multiplier: number): Money;
 
     public equals(object: any): boolean {
       const money = object as Money;
@@ -8,6 +9,14 @@ namespace Money {
         this.amount === money.amount &&
         this.constructor.name === money.constructor.name
       );
+    }
+
+    static dollar(amount: number): Money {
+      return new Dollar(amount);
+    }
+
+    static franc(amount: number): Money {
+      return new Franc(amount);
     }
   }
 
@@ -17,7 +26,7 @@ namespace Money {
       this.amount = amount;
     }
 
-    public times(multiplier: number): Dollar {
+    public times(multiplier: number): Money {
       return new Dollar(this.amount * multiplier);
     }
   }
@@ -28,7 +37,7 @@ namespace Money {
       this.amount = amount;
     }
 
-    public times(multiplier: number): Franc {
+    public times(multiplier: number): Money {
       return new Franc(this.amount * multiplier);
     }
   }
