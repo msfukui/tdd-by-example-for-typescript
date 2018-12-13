@@ -21,4 +21,9 @@ describe("Money module", () => {
     assert(five.times(2).equals(Money.Money.franc(10)));
     assert(five.times(3).equals(Money.Money.franc(15)));
   });
+
+  it("Currency Test", () => {
+    assert("USD", Money.Money.dollar(1).currency());
+    assert("CHF", Money.Money.franc(1).currency());
+  });
 });
