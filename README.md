@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/msfukui/tdd-by-example-for-typescript.svg?branch=master)](https://travis-ci.org/msfukui/tdd-by-example-for-typescript)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ef52791cd6eeb719e939/maintainability)](https://codeclimate.com/github/msfukui/tdd-by-example-for-typescript/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ef52791cd6eeb719e939/test_coverage)](https://codeclimate.com/github/msfukui/tdd-by-example-for-typescript/test_coverage)
 
 # TDD by Example for TypeScript
 
