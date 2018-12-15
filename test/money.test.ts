@@ -26,4 +26,25 @@ describe("Money module", () => {
     let reduced = bank.reduce(sum, "USD");
     assert(Money.Money.dollar(10).equals(reduced));
   });
+
+  it("Plus Returns Sum", () => {
+    let five = Money.Money.dollar(5);
+    let result = five.plus(five);
+    let sum = result as Money.Sum;
+    assert(five.equals(sum.augend));
+    assert(five.equals(sum.addend));
+  });
+
+  it("Sum Reduce Test", () => {
+    let sum = new Money.Sum(Money.Money.dollar(3), Money.Money.dollar(4));
+    let bank = new Money.Bank();
+    let result = bank.reduce(sum, "USD");
+    assert(Money.Money.dollar(7).equals(result));
+  });
+
+  it("Money Reduce Test", () => {
+    let bank = new Money.Bank(); 
+    let result = bank.reduce(Money.Money.dollar(1), "USD");
+    assert(Money.Money.dollar(1).equals(result));
+  });
 });
