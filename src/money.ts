@@ -1,5 +1,5 @@
 namespace Money {
-  export abstract class Money {
+  export class Money {
     protected amount: number = 0;
     protected cur: string = "";
 
@@ -8,7 +8,9 @@ namespace Money {
       this.cur = currency;
     }
 
-    abstract times(multiplier: number): Money;
+    public times(multiplier: number): Money {
+      return new Money(this.amount * multiplier, this.cur);
+    }
 
     public currency(): string {
       return this.cur;
@@ -18,7 +20,7 @@ namespace Money {
       const money = object as Money;
       return (
         this.amount === money.amount &&
-        this.constructor.name === money.constructor.name
+        this.currency() === money.currency()
       );
     }
 
@@ -35,19 +37,11 @@ namespace Money {
     constructor(amount: number, currency: string) {
       super(amount, currency);
     }
-
-    public times(multiplier: number): Money {
-      return Money.dollar(this.amount * multiplier);
-    }
   }
 
   export class Franc extends Money {
     constructor(amount: number, currency: string) {
       super(amount, currency);
-    }
-
-    public times(multiplier: number): Money {
-      return Money.franc(this.amount * multiplier);
     }
   }
 }
