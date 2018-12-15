@@ -26,4 +26,8 @@ describe("Money module", () => {
     assert("USD", Money.Money.dollar(1).currency());
     assert("CHF", Money.Money.franc(1).currency());
   });
+
+  it ("DifferentClassEquality Test", () => {
+    assert(new Money.Money(10, "CHF").equals(new Money.Franc(10, "CHF")));
+  });
 });
