@@ -4,8 +4,8 @@ import Money from "../src/money";
 describe("Money module", () => {
   it("Multiplication Test", () => {
     const five = Money.Money.dollar(5);
-    assert(five.times(2).equals(Money.Money.dollar(10)));
-    assert(five.times(3).equals(Money.Money.dollar(15)));
+    assert(Money.Money.dollar(10).equals(five.times(2)));
+    assert(Money.Money.dollar(15).equals(five.times(3)));
   });
 
   it("Equality Test", () => {
@@ -57,5 +57,14 @@ describe("Money module", () => {
 
   it("identity Rate Test", () => {
     assert(1 === new Money.Bank().rate("USD", "USD"));
+  });
+
+  it("Mixed Addition Test", () => {
+    const fiveBucks: Money.Money = Money.Money.dollar(5);
+    const tenFrancs: Money.Expression = Money.Money.franc(10);
+    const bank = new Money.Bank();
+    bank.addRate("CHF", "USD", 2);
+    const result = bank.reduce(fiveBucks.plus(tenFrancs), "USD");
+    assert(Money.Money.dollar(10).equals(result));
   });
 });

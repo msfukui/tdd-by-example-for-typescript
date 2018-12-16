@@ -1,5 +1,6 @@
 namespace Money {
-  interface Expression {
+  export interface Expression {
+    plus(addend: Expression): Expression;
     reduce(bank: Bank, to: string): Money;
   }
 
@@ -28,16 +29,22 @@ namespace Money {
   }
 
   export class Sum implements Expression {
-    public augend: Money;
-    public addend: Money;
+    public augend: Expression;
+    public addend: Expression;
 
-    constructor(augend: Money, addend: Money) {
+    constructor(augend: Expression, addend: Expression) {
       this.augend = augend;
       this.addend = addend;
     }
 
-    public reduce(bank: Bank, to: string) {
-      const amount = this.augend.getAmount() + this.addend.getAmount();
+    public plus(addend: Expression): Expression {
+      // TODO: Fake It.
+      return new Money(0, "");
+    }
+
+    public reduce(bank: Bank, to: string): Money {
+      const amount = this.augend.reduce(bank, to).getAmount()
+                   + this.addend.reduce(bank, to).getAmount();
       return new Money(amount, to);
     }
   }
@@ -51,15 +58,15 @@ namespace Money {
       this.cur = currency;
     }
 
-    public times(multiplier: number): Money {
+    public times(multiplier: number): Expression {
       return new Money(this.amount * multiplier, this.cur);
     }
 
-    public plus(addend: Money): Expression {
+    public plus(addend: Expression): Expression {
       return new Sum(this, addend);
     }
 
-    public reduce(bank: Bank, to: string) {
+    public reduce(bank: Bank, to: string): Money {
       const rate = bank.rate(this.cur, to);
       return new Money(this.amount / rate, to);
     }
@@ -79,7 +86,7 @@ namespace Money {
       return this.amount + " " + this.cur;
     }
 
-    public getAmount() {
+    public getAmount(): number {
       return this.amount;
     }
 
