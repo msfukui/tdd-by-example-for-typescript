@@ -1,5 +1,6 @@
 namespace Money {
   export interface Expression {
+    times(mulpiplier: number): Expression;
     plus(addend: Expression): Expression;
     reduce(bank: Bank, to: string): Money;
   }
@@ -37,9 +38,12 @@ namespace Money {
       this.addend = addend;
     }
 
+    public times(mulpiplier: number): Expression {
+      return new Sum(this.augend.times(mulpiplier), this.addend.times(mulpiplier));
+    }
+
     public plus(addend: Expression): Expression {
-      // TODO: Fake It.
-      return new Money(0, "");
+      return new Sum(this, addend);
     }
 
     public reduce(bank: Bank, to: string): Money {
