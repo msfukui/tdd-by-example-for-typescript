@@ -3,6 +3,5 @@ node_js:
   - "8"
 script:
   - npm test
-  - npm run build && npm run task:xunit
 after_success:
   - npm run clean

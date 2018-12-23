@@ -18,8 +18,8 @@
     "build": "tsc --lib es2015 --outDir dist",
     "test:mocha": "mocha --require espower-typescript/guess test/**/*.ts",
     "test:watch": "mocha --watch-extensions ts -w --require espower-typescript/guess test/**/*.ts",
-    "test": "npm run lint && npm run test:mocha",
-    "task:xunit": "node dist/src/xunit.js",
+    "test:xunit": "npm run build && node dist/src/xunit.js",
+    "test": "npm run lint && npm run test:mocha && npm run test:xunit",
     "clean": "rm -fr dist && mkdir dist"
   },
   "repository": {
