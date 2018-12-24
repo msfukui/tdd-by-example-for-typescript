@@ -15,7 +15,7 @@
   },
   "scripts": {
     "lint": "tslint 'src/**/*.ts' 'test/**/*.ts'",
-    "build": "tsc --lib es2015 --outDir dist",
+    "build": "tsc --lib es2015 --sourceMap --outDir dist",
     "test:mocha": "mocha --require espower-typescript/guess test/**/*.ts",
     "test:watch": "mocha --watch-extensions ts -w --require espower-typescript/guess test/**/*.ts",
     "test:xunit": "npm run build && node dist/src/xunit.js",
