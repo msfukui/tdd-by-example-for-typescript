@@ -1,7 +1,12 @@
 language: node_js
 node_js:
-  - "8"
+- '8'
 script:
-  - npm test
+- npm test
 after_success:
-  - npm run clean
+- npm run clean
+notifications:
+  email: false
+  slack:
+    secure:
+      o+lHMQWsRtGfMhArHSprW29g2U7GVU0lzfwjGQrGR+49ghyLrqoEtMLzAT7v0H1dnihnS0aAkFLgZQbL1/eDwghwCAVzwOwFv36HTo3u9BLKr7RJWcZ1ou9p87OcpIGJCdLiWNkLjvmi/9k5gWy43PSGjDAqAfKoEphqrDZb8AUkGLY4XAlED7ltrnrDjRyPe1eQCFvZrdyj7dnlz1P+SOgKJA+n3IHTwbki25XmbcGnujyJF9BwhylWdzQjNRhyJpZOldoWClGLie6gItVDIiePIXT4BX25NGuFtlxYMXeUpqNzEnRViFLC4uWFbvEb/KpDFri+h8YIvYVOFkpxlHAYoK3tNBWfx/f+8wjZBR7hmm3m2IadNHNH99udJL/VeDR3o6eHV1cpx6afJBDzn8GNQ7zTBN3x6FSNaPgc87sfJ29NqXnxAGNq/FL1AAWpJxzQexeXRkBKVkpc2fKfzMCSOolMYw5NG0WNk6ygnKXxtkafDCWjg6eVw9l7Ch7Wsc3UNLiocG3l4X6xsxOOauG2VLS5J/gpvwR/d3TvfjAja/wO7LVqc3WECMMdBcZwNdJzCh/JDmeYDyINP9zR4C0Yn7CPuoWm23+nJSQQm5d0sa5sPh9c183gsFdPEY7G4Ir1TBERCEJJRRroqs4LJAqb3DKtqE6OHQP37Cl6yfI=
