@@ -24,8 +24,7 @@ class TestCase {
 
   public tearDown(): void {}
 
-  public run(): TestResult {
-    const result = new TestResult();
+  public run(result: TestResult): void {
     result.testStarted();
     this.setUp();
     try {
@@ -39,7 +38,6 @@ class TestCase {
       }
     }
     this.tearDown();
-    return result;
   }
 }
 
@@ -57,6 +55,20 @@ class TestResult {
 
   public summary(): string {
     return `${this.runCount} run, ${this.errorCount} failed.`;
+  }
+}
+
+class TestSuite {
+  private tests: TestCase[] = [];
+
+  public add(test: TestCase): void {
+    this.tests.push(test);
+  }
+
+  public run(result: TestResult): void {
+    this.tests.forEach( v => {
+      v.run(result);
+    });
   }
 }
 
@@ -85,33 +97,51 @@ class WasRun extends TestCase {
 }
 
 class TestCaseTest extends TestCase {
+  private result = new TestResult();
+
+  public setUp() {
+    this.result = new TestResult();
+  }
+
   public testTemplateMethod(): void {
     const test = new WasRun("testMethod");
-    test.run();
+    test.run(this.result);
     assert.ok("setUp testMethod tearDown" === test.log);
   }
 
   public testResult(): void {
     const test = new WasRun("testMethod");
-    const result = test.run();
-    assert.ok("1 run, 0 failed." === result.summary());
+    test.run(this.result);
+    assert.ok("1 run, 0 failed." === this.result.summary());
   }
 
   public testFailedResult(): void {
     const test = new WasRun("testBrokenMethod");
-    const result = test.run();
-    assert.ok("1 run, 1 failed." === result.summary());
+    test.run(this.result);
+    assert.ok("1 run, 1 failed." === this.result.summary());
   }
 
   public testFailedResultFormatting(): void {
-    const result = new TestResult();
-    result.testStarted();
-    result.testFailed();
-    assert.ok("1 run, 1 failed." === result.summary());
+    this.result.testStarted();
+    this.result.testFailed();
+    assert.ok("1 run, 1 failed." === this.result.summary());
+  }
+
+  public testSuite(): void {
+    const suite = new TestSuite();
+    suite.add(new WasRun("testMethod"));
+    suite.add(new WasRun("testBrokenMethod"));
+    suite.run(this.result);
+    assert("2 run, 1 failed." === this.result.summary());
   }
 }
 
-console.log(`${new TestCaseTest("testTemplateMethod").run().summary()}`);
-console.log(`${new TestCaseTest("testResult").run().summary()}`);
-console.log(`${new TestCaseTest("testFailedResult").run().summary()}`);
-console.log(`${new TestCaseTest("testFailedResultFormatting").run().summary()}`);
+const suite = new TestSuite();
+suite.add(new TestCaseTest("testTemplateMethod"));
+suite.add(new TestCaseTest("testResult"));
+suite.add(new TestCaseTest("testFailedResult"));
+suite.add(new TestCaseTest("testFailedResultFormatting"));
+suite.add(new TestCaseTest("testSuite"));
+const result = new TestResult();
+suite.run(result);
+console.log(result.summary());
