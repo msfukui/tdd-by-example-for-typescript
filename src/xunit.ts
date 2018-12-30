@@ -20,9 +20,9 @@ class TestCase {
     this.name = name;
   }
 
-  public setUp() { }
+  public setUp() {}
 
-  public tearDown() { }
+  public tearDown() {}
 
   public run(result: TestResult) {
     result.testStarted();
@@ -61,8 +61,10 @@ class TestResult {
 class TestSuite {
   private tests: TestCase[] = [];
 
-  public add(test: TestCase) {
-    this.tests.push(test);
+  public build(...tests: TestCase[]) {
+    tests.forEach(v => {
+      this.tests.push(v);
+    });
   }
 
   public run(result: TestResult) {
@@ -138,8 +140,7 @@ class TestCaseTest extends TestCase {
 
   public testSuite() {
     const suite = new TestSuite();
-    suite.add(new WasRun("testMethod"));
-    suite.add(new WasRun("testBrokenMethod"));
+    suite.build(new WasRun("testMethod"), new WasRun("testBrokenMethod"));
     suite.run(this.result);
     assert("2 run, 1 failed." === this.result.summary());
   }
@@ -153,12 +154,14 @@ class TestCaseTest extends TestCase {
 }
 
 const suite = new TestSuite();
-suite.add(new TestCaseTest("testTemplateMethod"));
-suite.add(new TestCaseTest("testResult"));
-suite.add(new TestCaseTest("testFailedResult"));
-suite.add(new TestCaseTest("testFailedResultFormatting"));
-suite.add(new TestCaseTest("testSuite"));
-suite.add(new TestCaseTest("testFailedSetUp"));
+suite.build(
+  new TestCaseTest("testTemplateMethod"),
+  new TestCaseTest("testResult"),
+  new TestCaseTest("testFailedResult"),
+  new TestCaseTest("testFailedResultFormatting"),
+  new TestCaseTest("testSuite"),
+  new TestCaseTest("testFailedSetUp")
+);
 const result = new TestResult();
 suite.run(result);
 console.log(result.summary());
