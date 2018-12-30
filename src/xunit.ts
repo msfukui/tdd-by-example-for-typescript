@@ -20,14 +20,14 @@ class TestCase {
     this.name = name;
   }
 
-  public setUp(): void {}
+  public setUp() {}
 
-  public tearDown(): void {}
+  public tearDown() {}
 
-  public run(result: TestResult): void {
+  public run(result: TestResult) {
     result.testStarted();
-    this.setUp();
     try {
+      this.setUp();
       const method = "this." + this.name + "()";
       eval(method);
     } catch (e) {
@@ -45,11 +45,11 @@ class TestResult {
   private runCount: number = 0;
   private errorCount: number = 0;
 
-  public testStarted(): void {
+  public testStarted() {
     this.runCount = this.runCount + 1;
   }
 
-  public testFailed(): void {
+  public testFailed() {
     this.errorCount = this.errorCount + 1;
   }
 
@@ -61,12 +61,14 @@ class TestResult {
 class TestSuite {
   private tests: TestCase[] = [];
 
-  public add(test: TestCase): void {
-    this.tests.push(test);
+  public build(...tests: TestCase[]) {
+    tests.forEach(v => {
+      this.tests.push(v);
+    });
   }
 
-  public run(result: TestResult): void {
-    this.tests.forEach( v => {
+  public run(result: TestResult) {
+    this.tests.forEach(v => {
       v.run(result);
     });
   }
@@ -74,24 +76,32 @@ class TestSuite {
 
 class WasRun extends TestCase {
   public log: string = "";
+  private on_error_setup: boolean = false;
 
   constructor(name: string) {
     super(name);
+  }
+
+  public setOnErrorSetUp(on_error: boolean) {
+    this.on_error_setup = on_error;
   }
 
   public testMethod(): void {
     this.log = this.log + "testMethod ";
   }
 
-  public testBrokenMethod(): void {
+  public testBrokenMethod() {
     throw new TestFailedError("testBrokenMethod() error.");
   }
 
-  public setUp(): void {
+  public setUp() {
     this.log = "setUp ";
+    if (this.on_error_setup) {
+      throw new TestFailedError("setUp() error.");
+    }
   }
 
-  public tearDown(): void {
+  public tearDown() {
     this.log = this.log + "tearDown";
   }
 }
@@ -103,45 +113,55 @@ class TestCaseTest extends TestCase {
     this.result = new TestResult();
   }
 
-  public testTemplateMethod(): void {
+  public testTemplateMethod() {
     const test = new WasRun("testMethod");
     test.run(this.result);
     assert.ok("setUp testMethod tearDown" === test.log);
   }
 
-  public testResult(): void {
+  public testResult() {
     const test = new WasRun("testMethod");
     test.run(this.result);
     assert.ok("1 run, 0 failed." === this.result.summary());
   }
 
-  public testFailedResult(): void {
+  public testFailedResult() {
     const test = new WasRun("testBrokenMethod");
     test.run(this.result);
     assert.ok("1 run, 1 failed." === this.result.summary());
+    assert.ok("setUp tearDown" === test.log);
   }
 
-  public testFailedResultFormatting(): void {
+  public testFailedResultFormatting() {
     this.result.testStarted();
     this.result.testFailed();
     assert.ok("1 run, 1 failed." === this.result.summary());
   }
 
-  public testSuite(): void {
+  public testSuite() {
     const suite = new TestSuite();
-    suite.add(new WasRun("testMethod"));
-    suite.add(new WasRun("testBrokenMethod"));
+    suite.build(new WasRun("testMethod"), new WasRun("testBrokenMethod"));
     suite.run(this.result);
     assert("2 run, 1 failed." === this.result.summary());
+  }
+
+  public testFailedSetUp() {
+    const test = new WasRun("testMethod");
+    test.setOnErrorSetUp(true);
+    test.run(this.result);
+    assert.ok("1 run, 1 failed." === this.result.summary());
   }
 }
 
 const suite = new TestSuite();
-suite.add(new TestCaseTest("testTemplateMethod"));
-suite.add(new TestCaseTest("testResult"));
-suite.add(new TestCaseTest("testFailedResult"));
-suite.add(new TestCaseTest("testFailedResultFormatting"));
-suite.add(new TestCaseTest("testSuite"));
+suite.build(
+  new TestCaseTest("testTemplateMethod"),
+  new TestCaseTest("testResult"),
+  new TestCaseTest("testFailedResult"),
+  new TestCaseTest("testFailedResultFormatting"),
+  new TestCaseTest("testSuite"),
+  new TestCaseTest("testFailedSetUp")
+);
 const result = new TestResult();
 suite.run(result);
 console.log(result.summary());
