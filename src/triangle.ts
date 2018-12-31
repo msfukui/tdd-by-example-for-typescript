@@ -8,17 +8,17 @@ export class Triangle {
     this.sides[1] = side2;
     this.sides[2] = side3;
 
-    if (
-      this.sides[0] < 0 ||
-      this.sides[1] < 0 ||
-      this.sides[2] < 0 ||
-      this.sides[0] + this.sides[1] <= this.sides[2] ||
-      this.sides[1] + this.sides[2] <= this.sides[0] ||
-      this.sides[2] + this.sides[0] <= this.sides[1]
-    ) {
-      throw new TriangleError("Triange Creation Error.");
-    }
+    this.sides.forEach((v, k) => {
+      if (v < 0) {
+        throw new TriangleError("Negative number error.");
+      }
+
+      if (this.TriangleIrrational(k, this.sides)) {
+        throw new TriangleError("Triangle creation error.");
+      }
+    });
   }
+
   public check(): number {
     if (this.sides[0] !== this.sides[1] && this.sides[1] !== this.sides[2]) {
       return 3;
@@ -30,6 +30,21 @@ export class Triangle {
     } else {
       return 2;
     }
+  }
+
+  private TriangleIrrational(key: number, array: number[]): boolean {
+    if (
+      array[key] <
+      array[this.getSuffix(key + 1, array)] +
+        array[this.getSuffix(key + 2, array)]
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  private getSuffix(base: number, array: number[]): number {
+    return base < array.length ? base : base - array.length;
   }
 }
 
