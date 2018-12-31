@@ -13,26 +13,23 @@ export class Triangle {
         throw new TriangleError("Negative number error.");
       }
 
-      if (this.TriangleIrrational(k, this.sides)) {
+      if (this.isIrrational(k, this.sides)) {
         throw new TriangleError("Triangle creation error.");
       }
     });
   }
 
   public check(): number {
-    if (this.sides[0] !== this.sides[1] && this.sides[1] !== this.sides[2]) {
-      return 3;
-    } else if (
-      this.sides[0] === this.sides[1] &&
-      this.sides[1] === this.sides[2]
-    ) {
+    if (this.isEquilateral(this.sides)) {
       return 1;
-    } else {
+    } else if (this.isIsosceles(this.sides)) {
       return 2;
+    } else {
+      return 3;
     }
   }
 
-  private TriangleIrrational(key: number, array: number[]): boolean {
+  private isIrrational(key: number, array: number[]): boolean {
     if (
       array[key] <
       array[this.getSuffix(key + 1, array)] +
@@ -45,6 +42,27 @@ export class Triangle {
 
   private getSuffix(base: number, array: number[]): number {
     return base < array.length ? base : base - array.length;
+  }
+
+  private isEquilateral(array: number[]): boolean {
+    if (array[0] === array[1] && array[1] === array[2]) {
+      return true;
+    }
+    return false;
+  }
+
+  private isIsosceles(array: number[]): boolean {
+    if (this.isEquilateral(array)) {
+      return false;
+    }
+    if (
+      array[0] === array[1] ||
+      array[1] === array[2] ||
+      array[2] === array[0]
+    ) {
+      return true;
+    }
+    return false;
   }
 }
 
