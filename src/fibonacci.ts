@@ -6,7 +6,7 @@ export class Fibonacci {
     if (n === 1) {
       return 1;
     }
-    return this.calc(n-1) + this.calc(n-2);
+    return this.calc(n - 1) + this.calc(n - 2);
   }
 }
 export default Fibonacci;
